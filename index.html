@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metronome and Recorder App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Metronome and Recorder</h1>
+        <div id="metronome">
+            <h2>Metronome</h2>
+            <div id="controls">
+                <button id="startStop">Start Metronome</button>
+                <label for="tempo">Tempo (BPM):</label>
+                <input type="number" id="tempo" min="40" max="208" value="100">
+            </div>
+        </div>
+        <div id="recorder">
+            <h2>Recorder</h2>
+            <button id="record">Start Recording</button>
+            <button id="playRecording" disabled>Play Recording</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
