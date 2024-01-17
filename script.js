@@ -35,6 +35,31 @@ document.getElementById('playRecording').addEventListener('click', function() {
     }
 });
 
+let tapTimes = [];
+
+document.getElementById('tapTempo').addEventListener('click', function() {
+    const currentTime = Date.now();
+    tapTimes.push(currentTime);
+
+    if (tapTimes.length > 4) {
+        tapTimes.shift(); // Remove the oldest time
+    }
+
+    if (tapTimes.length === 4) {
+        const intervals = [
+            tapTimes[1] - tapTimes[0],
+            tapTimes[2] - tapTimes[1],
+            tapTimes[3] - tapTimes[2]
+        ];
+        const averageInterval = intervals.reduce((a, b) => a + b) / intervals.length;
+        const bpm = Math.round(60000 / averageInterval); // Convert to beats per minute and round to nearest whole number
+        document.getElementById('tempo').value = bpm;
+        if (isRunning) {
+            stopMetronome();
+            startMetronome();
+        }
+    }
+});
 function startMetronome() {
     const bpm = document.getElementById('tempo').value;
     const interval = 60000 / bpm;
@@ -58,7 +83,7 @@ async function startRecording() {
     audioChunks = [];
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { 
         channels: 2, 
-        autoGainControl: false, 
+        autoGainControl: true, 
         echoCancellation: false, 
         noiseSuppression: false 
     } });
@@ -78,12 +103,13 @@ async function startRecording() {
 
 function stopRecording() {
     mediaRecorder.stop();
+    stopMetronome();
 }
 
 function addAudioFileToUI(audioUrl) {
     const audioContainer = document.getElementById('audioContainer');
     const liElement = document.createElement('li');
-    const nameElement = document.createElement('p');
+    const nameElement = document.createElement('span');
     nameElement.textContent = document.getElementById('tempo').value + ' ' +  prompt('Enter a name for the recording');
     const audioElement = document.createElement('audio');
     audioElement.src = audioUrl;

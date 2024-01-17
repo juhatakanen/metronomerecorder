@@ -20,3 +20,13 @@ body {
 li {
     list-style-type: none;
 }
+
+#audioContainer li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+span {
+    margin-right: 10px;
+}
