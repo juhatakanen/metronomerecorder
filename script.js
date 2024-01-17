@@ -5,7 +5,7 @@ let audioChunks = [];
 let audioBlob;
 let audioUrl;
 let audio;
-let clickSound = new Audio('click.mp3');
+let clickSound = new Audio('click.mp3'); // Load the click sound
 
 document.getElementById('startStop').addEventListener('click', function() {
     if (isRunning) {
@@ -44,7 +44,7 @@ function startMetronome() {
 }
 
 function stopMetronome() {
-    clickSound.pause();
+    clearInterval(metronomeInterval);
 }
 
 document.getElementById('tempo').addEventListener('input', function() {
