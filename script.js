@@ -71,10 +71,24 @@ async function startRecording() {
         audioUrl = URL.createObjectURL(audioBlob);
         audio = new Audio(audioUrl);
         document.getElementById('playRecording').disabled = false;
+        addAudioFileToUI(audioUrl);
     };
     mediaRecorder.start();
 }
 
 function stopRecording() {
     mediaRecorder.stop();
+}
+
+function addAudioFileToUI(audioUrl) {
+    const audioContainer = document.getElementById('audioContainer');
+    const liElement = document.createElement('li');
+    const nameElement = document.createElement('p');
+    nameElement.textContent = document.getElementById('tempo').value + ' ' +  prompt('Enter a name for the recording');
+    const audioElement = document.createElement('audio');
+    audioElement.src = audioUrl;
+    audioElement.controls = true;
+    liElement.appendChild(nameElement);
+    liElement.appendChild(audioElement);
+    audioContainer.insertBefore(liElement, audioContainer.firstChild);
 }
